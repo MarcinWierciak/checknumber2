@@ -11,7 +11,7 @@ class AddressBook:
         self.addresses = []
 
     def add_address(self, address):
-        if isinstance(address, Address) or isinstance(address, WorkAddress):
+        if isinstance(address, Address):
             self.addresses.append(address)
         else:
             raise TypeError
@@ -52,7 +52,6 @@ class AddressBook:
                 address_book.addresses.append(WorkAddress(*address))
         return address_book
 
-
     def save_to_csv(self):
         with open(self.name + ".csv", "w") as f:
             f.write("person,city,street,house_no,company\n")
@@ -66,4 +65,7 @@ class AddressBook:
 
     def __str__(self):
         for address in self.addresses:
-            print(address)
+            if isinstance(address, WorkAddress):
+                print(WorkAddress.get_full_address(address))
+            else:
+                print(Address.get_full_address(address))
